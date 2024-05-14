@@ -1,4 +1,4 @@
-import bcryptjs from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import Model from '../Models/Model';
@@ -40,7 +40,7 @@ const userSignIn = (req, res, next) => {
 	Model.UserModel.findOne({ email }).then(user => {
 		if (user) {
 			// if email found compare the password
-			bcryptjs.compare(password, user.password).then(result => {
+			bcrypt.compare(password, user.password).then(result => {
 				// if password match create payload
 				if (result) {
 					createToken(user, res, next);

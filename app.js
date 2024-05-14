@@ -43,6 +43,7 @@ app.use('/signup', Router.SignupRouter);
 app.use('/signin', Router.SigninRouter);
 
 app.use('/event', Router.EventRouter);
+app.use('/studentSignUp',Router.studentRouter);
 
 // i have implemented it in signup controller like this {next(new Error('Image is required'))}
 app.use(errorHandler);

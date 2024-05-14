@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const EventSchema = new mongoose.Schema(
 	{
 		name: String,
-		date: String,
+		time: String,
 		description: String,
 	},
 	{
