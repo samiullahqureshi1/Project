@@ -13,7 +13,7 @@ const studentSignUp = (req, res) => {
 		usertype,
 		otherQualification,
 	} = req.body;
-	const newStudent =studentModel({
+	const newStudent = studentModel({
 		FirstName,
 		LastName,
 		Email,
@@ -34,45 +34,64 @@ const studentSignUp = (req, res) => {
 	});
 };
 
-const getStudent=(req,res)=>{
-    studentModel.find().then((users)=>{
-        if(users){
-            res.status(201).send(users);
-        }else{
-            res.status(404).send('unable to get');
-        }
-    });
-    
+const getStudent = (req, res) => {
+	studentModel.find().then(users => {
+		if (users) {
+			res.status(201).send(users);
+		} else {
+			res.status(404).send('unable to get');
+		}
+	});
 };
 
-const updatestudent=(req,res)=>{
-    const {id}=req.params;
-    const query={$set:req.body};
-    studentModel.findByIdAndUpdate(id,query,(err,results)=>{
-        if(err){
-            res.status(404).send('unable to update');
-        }else{
-            res.status(201).send({
-                message:'successfully updated',
-                results,
-            });
-        };
-    });
+const updatestudent = (req, res) => {
+	const { id } = req.params;
+	const query = { $set: req.body };
+	studentModel.findByIdAndUpdate(id, query, (err, results) => {
+		if (err) {
+			res.status(404).send('unable to update');
+		} else {
+			res.status(201).send({
+				message: 'successfully updated',
+				results,
+			});
+		}
+	});
 };
 
-const deleteStudent=(req,res)=>{
-    const {id}=req.params;
-    const query={$set:req.body};    
-    studentModel.findByIdAndRemove(id,query,(err,result)=>{
-        if(err){
-            res.status(404).send('unable to delete');
-        }else{
-            res.status(201).send({
-                message:'successfully deleted',
-                result,
-            });
-        }
-    });
+const deleteStudent = (req, res) => {
+	const { id } = req.params;
+	const query = { $set: req.body };
+	studentModel.findByIdAndRemove(id, query, (err, result) => {
+		if (err) {
+			res.status(404).send('unable to delete');
+		} else {
+			res.status(201).send({
+				message: 'successfully deleted',
+				result,
+			});
+		}
+	});
 };
 
-export default { studentSignUp,getStudent,updatestudent,deleteStudent};
+const getPagination = async (req, res) => {
+   const page = parseInt(req.query.page) || 1;
+   const perPage=3;
+   const totalPosts= studentModel.countDocuments();
+   const totalPages = Math.ceil(totalPosts / perPage);
+   if(page >totalPages){
+	return res.status(404).send('unable')
+   }
+
+   	const posts=await studentModel.find().skip((page -1)*perPage).limit(perPage).exec();
+	res.status(201).json({posts,totalPages,page})
+};
+
+
+export default {
+	studentSignUp,
+	getStudent,
+	updatestudent,
+	deleteStudent,
+	getPagination,
+};
