@@ -96,23 +96,16 @@ const getPagination = async (req, res) => {
 const getSearch = (req, res) => {
 	const { courseName } = req.query;
 	console.log(courseName);
-	const perCourse=parseInt(req.query.perCourse) || 10;
 	const regexPattern = new RegExp(courseName, 'i');
 	studentModel
-		.find({ courseName: { $regex: regexPattern } }).limit(perCourse)
+		.find({ courseName: { $regex: regexPattern } })
 		.then(result => {
-		
-			res.status(200).send({
-				message:'only 10 students will atempt',
-				result,
-			})
+			res.json(result);
 		})
 		.catch(err => {
 			res.status(500).json({ error: err.message });
 		});
 };
-
-
 
 export default {
 	studentSignUp,
