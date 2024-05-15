@@ -7,4 +7,5 @@ studentRouter.get('/find',student.getStudent);
 studentRouter.put('/update/:id',student.updatestudent);
 studentRouter.delete('/delete/:id',student.deleteStudent);
 studentRouter.get('/pagination',student.getPagination);
+studentRouter.get('/search',student.getSearch);
 export default studentRouter;

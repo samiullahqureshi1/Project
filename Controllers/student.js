@@ -75,18 +75,35 @@ const deleteStudent = (req, res) => {
 };
 
 const getPagination = async (req, res) => {
-   const page = parseInt(req.query.page) || 1;
-   const perPage=3;
-   const totalPosts= studentModel.countDocuments();
-   const totalPages = Math.ceil(totalPosts / perPage);
-   if(page >totalPages){
-	return res.status(404).send('unable')
-   }
+	const page = parseInt(req.query.page) || 1;
+	const perPage = parseInt(req.query.perPage) || 10;
+	const totalPosts = studentModel.countDocuments();
+	const totalPages = Math.ceil(totalPosts / perPage);
+	if (page > totalPages) {
+		return res.status(404).send('UNABLE TO SEND');
+	}
 
-   	const posts=await studentModel.find().skip((page -1)*perPage).limit(perPage).exec();
-	res.status(201).json({posts,totalPages,page})
+	const posts = await studentModel
+		.find()
+		.skip((page - 1) * perPage)
+		.limit(perPage)
+		.exec();
+	res.status(201).json({ posts, totalPages, page });
 };
 
+const getSearch = (req, res) => {
+	const { usertype } = req.query;
+	console.log(usertype);
+	const regexPattern = new RegExp(usertype, 'i');
+	studentModel
+		.find({ usertype: { $regex: regexPattern } })
+		.then(result => {
+			res.json(result);
+		})
+		.catch(err => {
+			res.status(500).json({ error: err.message });
+		});
+};
 
 export default {
 	studentSignUp,
@@ -94,4 +111,5 @@ export default {
 	updatestudent,
 	deleteStudent,
 	getPagination,
+	getSearch,
 };
