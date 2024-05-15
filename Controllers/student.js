@@ -95,7 +95,7 @@ const getPagination = async (req, res) => {
 
 const getSearch = (req, res) => {
 	const { courseName } = req.query;
-	console.log(usertype);
+	console.log(courseName);
 	const regexPattern = new RegExp(courseName, 'i');
 	studentModel
 		.find({ usertype: { $regex: regexPattern } })
