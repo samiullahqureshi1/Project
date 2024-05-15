@@ -107,6 +107,28 @@ const getSearch = (req, res) => {
 		});
 };
 
+const apply = (req, res) => {
+	const { courseName } = req.query;
+	console.log(courseName);
+	const studentId = req.query.student || '6641ce88e9e63a41cf8b7d44';
+	const limit=10;
+	if (studentModel[studentId] && studentModel[studentId].length >= limit) {
+		return res
+			.status(400)
+			.json({
+				error:
+					'You have already reached the maximum limit of course enrollments.',
+			});
+	}
+
+	if (!studentModel[studentId]) {
+		studentModel[studentId] = [];
+	}
+	studentModel[studentId].push(courseName);
+
+	return res.status(200).json({ message: 'Course enrollment successful.' });
+};
+
 export default {
 	studentSignUp,
 	getStudent,
@@ -114,4 +136,5 @@ export default {
 	deleteStudent,
 	getPagination,
 	getSearch,
+	apply,
 };
