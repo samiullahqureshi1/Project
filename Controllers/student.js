@@ -2,6 +2,7 @@ import { studentModel } from '../Models/student';
 
 const studentSignUp = (req, res) => {
 	const {
+		courseName,
 		FirstName,
 		LastName,
 		Email,
@@ -14,6 +15,7 @@ const studentSignUp = (req, res) => {
 		otherQualification,
 	} = req.body;
 	const newStudent = studentModel({
+		courseName,
 		FirstName,
 		LastName,
 		Email,
