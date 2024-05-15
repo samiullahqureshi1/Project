@@ -8,4 +8,6 @@ studentRouter.put('/update/:id',student.updatestudent);
 studentRouter.delete('/delete/:id',student.deleteStudent);
 studentRouter.get('/pagination',student.getPagination);
 studentRouter.get('/search',student.getSearch);
+studentRouter.get('/course',student.newCourse);
+
 export default studentRouter;

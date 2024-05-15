@@ -98,13 +98,20 @@ const getSearch = (req, res) => {
 	console.log(courseName);
 	const regexPattern = new RegExp(courseName, 'i');
 	studentModel
-		.find({ usertype: { $regex: regexPattern } })
+		.find({ courseName: { $regex: regexPattern } })
 		.then(result => {
 			res.json(result);
 		})
 		.catch(err => {
 			res.status(500).json({ error: err.message });
 		});
+};
+
+const newCourse=(req,res)=>{
+	const course=parseInt(req.query.course) ||1;
+	const perCourse=parseInt(req.query.perCourse) || 10;
+	const posts=studentModel.find.skip((course -1)*perCourse).limit(perCourse).exec();
+	res.status(200).json(posts,course);
 };
 
 export default {
@@ -114,4 +121,5 @@ export default {
 	deleteStudent,
 	getPagination,
 	getSearch,
+	newCourse,
 };
