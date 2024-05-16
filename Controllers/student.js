@@ -128,8 +128,8 @@ const apply = (req, res) => {
 };
 
 const studentProgress = (req, res) => {
-	const { id } = req.query.id;
-	const progressStudent = studentModel[id];
+	const {FirstName} = req.query;
+	const progressStudent = studentModel[FirstName];
 	if (progressStudent) {
 		res.status(200).send(progressStudent);
 	} else {
