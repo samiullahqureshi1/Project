@@ -132,7 +132,8 @@ const apply = (req, res) => {
 const studentProgress = (req, res) => {
 	const { FirstName } = req.query;
 	console.log(FirstName);
-	studentModel.find(FirstName).then(result => {
+	const regexPattern = new RegExp(FirstName, 'i');
+	studentModel.find({FirstName:{$regex: regexPattern }}).then(result => {
 		if (result) {
 			res.status(200).send(result);
 		} else {
