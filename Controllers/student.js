@@ -129,21 +129,17 @@ const apply = (req, res) => {
 	return res.status(200).json({ message: 'Course enrollment successful.' });
 };
 
-
-	const studentProgress = (req, res) => {
-		const {FirstName}=req.query;
-		console.log(FirstName)
-		studentModel.find(FirstName).then(result=>{
-			if(result){
-				res.status(200).send(result)
-			}else{
-				res.status(404).send('unable to find');
-			}
-		})
-
-	};
-	
-
+const studentProgress = (req, res) => {
+	const { FirstName } = req.query;
+	console.log(FirstName);
+	studentModel.find(FirstName).then(result => {
+		if (result) {
+			res.status(200).send(result);
+		} else {
+			res.status(404).send('unable to find');
+		}
+	});
+};
 
 export default {
 	studentSignUp,
