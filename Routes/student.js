@@ -9,5 +9,5 @@ studentRouter.delete('/delete/:id',student.deleteStudent);
 studentRouter.get('/pagination',student.getPagination);
 studentRouter.get('/search',student.getSearch);
 studentRouter.post('/app',student.apply);
-
+studentRouter.get('/progress',student.studentProgress);
 export default studentRouter;
